@@ -9,12 +9,13 @@
 /* pieces are div within game table cells: draw as colored circles */
 
 .piece {
-  /* margin: 0.1rem, 0.1rem, 0.1rem, -0.2rem; */
   margin: 0rem;
   width: 75%;
   height: 75%;
   border-radius: 2rem;
 }
+
+/* make pieces red/blue, depending on player 1/2 piece */
 
 .p1 {
   background-color: red;
@@ -22,11 +23,9 @@
 }
 
 .p2 {
-  background-color: blue;
+  background-color: rgb(40, 40, 255);
   border: 0.4rem solid rgb(0, 0, 216);
 }
-
-/* TODO: make pieces red/blue,  depending on player 1/2 piece */
 
 /* column-top is table row of clickable areas for each column */
 
