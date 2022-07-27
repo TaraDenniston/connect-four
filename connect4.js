@@ -110,12 +110,6 @@ function handleClick(evt) {
   }
 
   // check for tie: if all cells in board are filled, game ends
-  // for (let row of board) {
-  //   if (row.every(cell => cell !== null)) {
-  //     return endGame('Game Over - Tie!');
-  //   }
-  // }
-
   if (board.every(row => (row.every(cell => cell !== null)))) {
     return endGame('Game Over - Tie!');
   }
