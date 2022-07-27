@@ -110,10 +110,14 @@ function handleClick(evt) {
   }
 
   // check for tie: if all cells in board are filled, game ends
-  for (let row of board) {
-    if (row.every(cell => cell !== null)) {
-      return endGame('Game Over - Tie!');
-    }
+  // for (let row of board) {
+  //   if (row.every(cell => cell !== null)) {
+  //     return endGame('Game Over - Tie!');
+  //   }
+  // }
+
+  if (board.every(row => (row.every(cell => cell !== null)))) {
+    return endGame('Game Over - Tie!');
   }
 
   // switch players
@@ -138,21 +142,25 @@ function checkForWin() {
     );
   }
 
-  // TODO: read and understand this code. Add comments to help you.
-
   // Check through every cell on the board
-  for (var y = 0; y < HEIGHT; y++) {
-    for (var x = 0; x < WIDTH; x++) {
-      // horiz include current cell & 3 cells to the right
-      var horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
-      // vert includes current cell & 3 cells below
-      var vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
-      // diagDR includes current cell and 3 cells diagonally down to the right
-      var diagDR = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
-      // diagDR includes current cell and 3 cells diagonally down to the left
-      var diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
+  for (let y = 0; y < HEIGHT; y++) {
+    for (let x = 0; x < WIDTH; x++) {
 
-      // if values in any set of 4 are all the same, return true
+      // don't bother checking if current cell is empty
+      if (board[y][x] === null) {
+        continue;
+      }
+
+      // horiz includes current cell & 3 cells to the right
+      const horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
+      // vert includes current cell & 3 cells below
+      const vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
+      // diagDR includes current cell and 3 cells diagonally down to the right
+      const diagDR = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
+      // diagDR includes current cell and 3 cells diagonally down to the left
+      const diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
+
+      // if values in any set of 4 are a legal win for current player, return true
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
         return true;
       }
