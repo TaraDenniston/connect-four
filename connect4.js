@@ -16,6 +16,7 @@ const board = []; // array of rows, each row is array of cells  (board[y][x])
  */
 
 function makeBoard() {
+  // Create JS board dynamically using WIDTH and HEIGHT constants
   for (let y = 0; y < HEIGHT; y++) {
     board[y] = [];
     for (let x = 0; x < WIDTH; x++) {
@@ -28,21 +29,22 @@ function makeBoard() {
 /** makeHtmlBoard: make HTML table and row of column tops. */
 
 function makeHtmlBoard() {
-  // TODO: get "htmlBoard" variable from the item in HTML w/ID of "board"
+  // Create "htmlBoard" variable from the item in HTML w/ID of "board"
+  let htmlBoard = document.querySelector("#board");
 
-  // TODO: add comment for this code
-  var top = document.createElement("tr");
+  // Create table elements for row of column tops
+  const top = document.createElement("tr");
   top.setAttribute("id", "column-top");
   top.addEventListener("click", handleClick);
 
-  for (var x = 0; x < WIDTH; x++) {
+  for (let x = 0; x < WIDTH; x++) {
     var headCell = document.createElement("td");
     headCell.setAttribute("id", x);
     top.append(headCell);
   }
   htmlBoard.append(top);
 
-  // TODO: add comment for this code
+  // Create table elements for all cells on the board
   for (var y = 0; y < HEIGHT; y++) {
     const row = document.createElement("tr");
     for (var x = 0; x < WIDTH; x++) {
