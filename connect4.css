@@ -4,15 +4,21 @@
   width: 50px;
   height: 50px;
   border: solid 1px #666;
+  position: relative;
 }
 
 /* pieces are div within game table cells: draw as colored circles */
 
-.piece {
+div.piece {
   margin: 0rem;
   width: 75%;
   height: 75%;
   border-radius: 2rem;
+
+  position: absolute;
+  top: 0px;
+  animation-name: drop;
+  animation-duration: 1s;
 }
 
 /* make pieces red/blue, depending on player 1/2 piece */
@@ -27,6 +33,13 @@
   border: 0.4rem solid rgb(0, 0, 216);
 }
 
+/* animate the piece dropping into place when it is clicked */
+
+@keyframes drop {
+  0%   {top:-200px;}
+  100% {top:0px;}
+}
+
 /* column-top is table row of clickable areas for each column */
 
 #column-top td {
@@ -36,3 +49,4 @@
 #column-top td:hover {
   background-color: gold;
 }
+
