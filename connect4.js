@@ -59,8 +59,14 @@ function makeHtmlBoard() {
 /** findSpotForCol: given column x, return top empty y (null if filled) */
 
 function findSpotForCol(x) {
-  // TODO: write the real version of this, rather than always returning 0
-  return 0;
+  // return the y coordinate of the lowest available cell in column x
+  for (let y = HEIGHT - 1; y >= 0; y--) {
+    if (board[y][x] === null) {
+      return y;
+    }
+  }
+  // if no cells are available, return null
+  return null;
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
@@ -77,7 +83,7 @@ function placeInTable(y, x) {
 /** endGame: announce game end */
 
 function endGame(msg) {
-  // TODO: pop up alert message
+  alert(msg);
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -134,13 +140,19 @@ function checkForWin() {
 
   // TODO: read and understand this code. Add comments to help you.
 
+  // Check through every cell on the board
   for (var y = 0; y < HEIGHT; y++) {
     for (var x = 0; x < WIDTH; x++) {
+      // horiz include current cell & 3 cells to the right
       var horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
+      // vert includes current cell & 3 cells below
       var vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
+      // diagDR includes current cell and 3 cells diagonally down to the right
       var diagDR = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
+      // diagDR includes current cell and 3 cells diagonally down to the left
       var diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
 
+      // if values in any set of 4 are all the same, return true
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
         return true;
       }
