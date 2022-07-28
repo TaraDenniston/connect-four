@@ -9,6 +9,7 @@ const WIDTH = 7;
 const HEIGHT = 6;
 
 let currPlayer = 1; // active player: 1 or 2
+let gameOver = false;
 const board = []; // array of rows, each row is array of cells  (board[y][x])
 
 /** makeBoard: create in-JS board structure:
@@ -85,12 +86,19 @@ function placeInTable(y, x) {
 /** endGame: announce game end */
 
 function endGame(msg) {
-  alert(msg);
+  document.getElementById("text1").innerText = msg;
+  document.getElementById("text2").innerText = "Refresh to begin a new game";
+  gameOver = true;
 }
 
 /** handleClick: handle click of column top to play piece */
 
 function handleClick(evt) {
+  // don't respond to click if game has ended
+  if (gameOver) {
+    return;
+  }
+
   // get x from ID of clicked cell
   const x = evt.target.id;
 
@@ -119,6 +127,7 @@ function handleClick(evt) {
   // switch players
   currPlayer === 1 ? currPlayer = 2 : currPlayer = 1; 
   document.getElementById("column-top").setAttribute("class", `c${currPlayer}`);
+  document.getElementById("text").innerText = `Player ${currPlayer}'s Turn`;
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
