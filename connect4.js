@@ -127,7 +127,7 @@ function handleClick(evt) {
   // switch players
   currPlayer === 1 ? currPlayer = 2 : currPlayer = 1; 
   document.getElementById("column-top").setAttribute("class", `c${currPlayer}`);
-  document.getElementById("text").innerText = `Player ${currPlayer}'s Turn`;
+  document.getElementById("text1").innerText = `Player ${currPlayer}'s Turn`;
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
