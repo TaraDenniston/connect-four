@@ -14,11 +14,8 @@ div.piece {
   width: 75%;
   height: 75%;
   border-radius: 2rem;
-
   position: absolute;
   top: 0px;
-  animation-name: drop;
-  animation-duration: 1s;
 }
 
 /* make pieces red/blue, depending on player 1/2 piece */
@@ -33,10 +30,66 @@ div.piece {
   border: 0.4rem solid rgb(0, 0, 216);
 }
 
-/* animate the piece dropping into place when it is clicked */
+/* animate the piece dropping into place when it is clicked 
+ * animation is different depending on how far the piece is falling */
 
-@keyframes drop {
-  0%   {top:-200px;}
+div.piece.drop6 {
+  animation-name: drop6;
+  animation-duration: 0.6s;
+}
+
+@keyframes drop6 {
+  0%   {top:-335px;}
+  100% {top:0px;}
+}
+
+div.piece.drop5 {
+  animation-name: drop5;
+  animation-duration: 0.5s;
+}
+
+@keyframes drop5 {
+  0%   {top:-279px;}
+  100% {top:0px;}
+}
+
+div.piece.drop4 {
+  animation-name: drop4;
+  animation-duration: 0.4s;
+}
+
+@keyframes drop4 {
+  0%   {top:-223px;}
+  100% {top:0px;}
+}
+
+div.piece.drop3 {
+  animation-name: drop3;
+  animation-duration: 0.3s;
+}
+
+@keyframes drop3 {
+  0%   {top:-167px;}
+  100% {top:0px;}
+}
+
+div.piece.drop2 {
+  animation-name: drop2;
+  animation-duration: 0.2s;
+}
+
+@keyframes drop2 {
+  0%   {top:-111px;}
+  100% {top:0px;}
+}
+
+div.piece.drop1 {
+  animation-name: drop1;
+  animation-duration: 0.1s;
+}
+
+@keyframes drop1 {
+  0%   {top:-55px;}
   100% {top:0px;}
 }
 
@@ -46,7 +99,21 @@ div.piece {
   border: dashed 1px lightgray;
 }
 
-#column-top td:hover {
-  background-color: gold;
+tr#column-top.c1 td:hover {
+  background-color: rgba(255, 0, 0, 0.3);
+  border: 5px solid rgba(216, 0, 0, 0.3);
+  margin: 0rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 2rem;
+}
+
+tr#column-top.c2 td:hover {
+  background-color: rgba(0, 0, 255, 0.3);
+  border: 5px solid rgba(0, 0, 216, 0.3);
+  margin: 0rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 2rem;
 }
 

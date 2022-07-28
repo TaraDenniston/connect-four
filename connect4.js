@@ -35,6 +35,7 @@ function makeHtmlBoard() {
   // Create table elements for row of column tops
   const top = document.createElement("tr");
   top.setAttribute("id", "column-top");
+  top.setAttribute("class", `c${currPlayer}`);
   top.addEventListener("click", handleClick);
 
   for (let x = 0; x < WIDTH; x++) {
@@ -77,6 +78,7 @@ function placeInTable(y, x) {
   const currCell = document.getElementById(`${y}-${x}`);
   pieceDiv.classList.add("piece");
   pieceDiv.classList.add(`p${currPlayer}`);
+  pieceDiv.classList.add(`drop${y + 1}`);
   currCell.append(pieceDiv);
 }
 
@@ -111,11 +113,12 @@ function handleClick(evt) {
 
   // check for tie: if all cells in board are filled, game ends
   if (board.every(row => (row.every(cell => cell !== null)))) {
-    return endGame('Game Over - Tie!');
+    return endGame("Game Over - Tie!");
   }
 
   // switch players
-  currPlayer === 1 ? currPlayer = 2 : currPlayer = 1;  
+  currPlayer === 1 ? currPlayer = 2 : currPlayer = 1; 
+  document.getElementById("column-top").setAttribute("class", `c${currPlayer}`);
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
