@@ -100,7 +100,7 @@ function handleClick(evt) {
   }
 
   // get x from ID of clicked cell
-  const x = evt.target.id;
+  const x = +evt.target.id;
 
   // get next spot in column (if none, ignore click)
   const y = findSpotForCol(x);
@@ -115,7 +115,7 @@ function handleClick(evt) {
   board[y][x] = currPlayer;
 
   // check for win
-  if (checkForWin()) {
+  if (checkForWin(y, x)) {
     return endGame(`Game Over - Player ${currPlayer} Wins!`);
   }
 
@@ -130,29 +130,28 @@ function handleClick(evt) {
   document.getElementById("text1").innerText = `Player ${currPlayer}'s Turn`;
 }
 
-/** checkForWin: check board cell-by-cell for "does a win start here?" */
+/** checkForWin: check all possible valid combinations containing piece just played */
 
-function checkForWin() {
-  let winDetected = false;
+function checkForWin(y, x) {
+  let winDetected = false;  
 
-  // helper function: only return true if the given cell is on the board, not empty, 
-  // and belongs to current player
+  // helper function: only return true if the given cell is on the board and 
+  // belongs to current player
   const cellCounted = (y, x) => {
     return y > -1 && y < HEIGHT && 
-           x > -1 && x < WIDTH && 
-           board[y][x] !== null &&
+           x > -1 && x < WIDTH &&
            board[y][x] === currPlayer; 
   };
 
   // helper function: return count of matching horizontal cells in a row
   const checkHoriz = (y, x)  => {
-    let counter = 1;
+    let count = 1;
     let fromOrigin = 1;
 
     // check horizontally to the right for cells belonging to current player
     let tempX = x + 1;
     while (cellCounted(y, tempX) && fromOrigin < 4) {
-      counter++;
+      count++;
       tempX++;
       fromOrigin++;      
     }
@@ -161,23 +160,23 @@ function checkForWin() {
     fromOrigin = 1;
     tempX = x - 1;
     while (cellCounted(y, tempX) && fromOrigin < 4) {
-      counter++;
+      count++;
       tempX--;
       fromOrigin++;      
     }
 
-    return counter;
+    return count;
   };
 
   // helper function: return count of matching vertical cells in a row
   const checkVert = (y, x)  => {
-    let counter = 1;
+    let count = 1;
     let fromOrigin = 1;
 
     // check vertically upwards for cells belonging to current player
     let tempY = y - 1;
     while (cellCounted(tempY, x) && fromOrigin < 4) {
-      counter++;
+      count++;
       tempY--;
       fromOrigin++;      
     }
@@ -186,27 +185,28 @@ function checkForWin() {
     fromOrigin = 1;
     tempY = y + 1;
     while (cellCounted(tempY, x) && fromOrigin < 4) {
-      counter++;
+      count++;
       tempY++;
       fromOrigin++;      
     }
 
-    return counter;
+    return count;
   };
 
   // helper function: return count of matching ascending diagonal cells in a row
   const checkAscenDiag = (y, x)  => {
-    let counter = 1;
+    let count = 1;
     let fromOrigin = 1;
 
     // check diagonally up/right for cells belonging to current player
     let tempY = y - 1;
     let tempX = x + 1;
     while (cellCounted(tempY, tempX) && fromOrigin < 4) {
-      counter++;
+      count++;
       tempY--;
       tempX++;
-      fromOrigin++;      
+      fromOrigin++;
+      console.log(count);     
     }
 
     // check diagonally down/left for cells belonging to current player
@@ -214,23 +214,26 @@ function checkForWin() {
     tempY = y + 1;
     tempX = x - 1;
     while (cellCounted(tempY, tempX) && fromOrigin < 4) {
-      counter++;
+      count++;
       tempY++;
       tempX--;
-      fromOrigin++;      
+      fromOrigin++;
+      console.log(count);   
     }
+
+    return count;
   };
 
   // helper function: return count of matching descending diagonal cells in a row
   const checkDescenDiag = (y, x)  => {
-    let counter = 1;
+    let count = 1;
     let fromOrigin = 1;
 
     // check diagonally down/right for cells belonging to current player
     let tempY = y + 1;
     let tempX = x + 1;
     while (cellCounted(tempY, tempX) && fromOrigin < 4) {
-      counter++;
+      count++;
       tempY++;
       tempX++;
       fromOrigin++;      
@@ -241,32 +244,18 @@ function checkForWin() {
     tempY = y - 1;
     tempX = x - 1;
     while (cellCounted(tempY, tempX) && fromOrigin < 4) {
-      counter++;
+      count++;
       tempY--;
       tempX--;
       fromOrigin++;      
     }
 
-    return counter;
+    return count;
   };  
 
-  // Check through every cell on the board
-  OUTER: for (let y = 0; y < HEIGHT; y++) {
-    for (let x = 0; x < WIDTH; x++) {
-
-      // don't bother checking if current cell is empty or belongs to other player
-      if (board[y][x] === null || board[y][x] !== currPlayer) {
-        continue;
-      }
-      
-      // current player wins if they have 4 pieces in a row diagonally, horizontally, or 
-      // verically based on up to 3 valid cells out from current cell in each direction
-      if (checkHoriz(y, x) > 3 || checkVert(y, x) > 3 || 
-          checkAscenDiag(y, x) > 3 || checkDescenDiag(y, x) > 3) {
-        winDetected = true;
-        break OUTER;
-      }
-    }
+  if (checkHoriz(y, x) > 3 || checkVert(y, x) > 3 || 
+      checkAscenDiag(y, x) > 3 || checkDescenDiag(y, x) > 3) {
+    winDetected = true;
   }
 
   return winDetected;
